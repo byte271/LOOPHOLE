@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "name": "Emberworks Welcome Desk",
+  "description": "A profitable welcome gift is not an infinite-money glitch. Track the token.",
+  "source": "Buy one ember for 0.10 sparks from an inexhaustible supply. Convert two embers into one prism. Sell a prism for 0.20 sparks to an inexhaustible buyer.\n\nWhile holding a prism, spend your single welcome token to receive 0.05 sparks. This benefit can be claimed only once and is never replenished.\n\nStart with 1.00 sparks, no items, and one welcome token. Hold at most two embers, one prism and one welcome token. All actions cost one turn. Turns are uncapped; there are no other conditions, rewards or currency caps.",
+  "currency": {
+    "label": "sparks",
+    "decimals": 2
+  },
+  "resources": [
+    {
+      "id": "ember",
+      "label": "Ember",
+      "kind": "item",
+      "max": 2
+    },
+    {
+      "id": "prism",
+      "label": "Prism",
+      "kind": "item",
+      "max": 1
+    },
+    {
+      "id": "welcome",
+      "label": "Welcome token",
+      "kind": "flag",
+      "max": 1
+    }
+  ],
+  "rules": [
+    {
+      "id": "trade",
+      "text": "Buy one ember for 0.10 sparks from an inexhaustible supply. Convert two embers into one prism. Sell a prism for 0.20 sparks to an inexhaustible buyer."
+    },
+    {
+      "id": "welcome",
+      "text": "While holding a prism, spend your single welcome token to receive 0.05 sparks. This benefit can be claimed only once and is never replenished."
+    },
+    {
+      "id": "limits",
+      "text": "Start with 1.00 sparks, no items, and one welcome token. Hold at most two embers, one prism and one welcome token. All actions cost one turn. Turns are uncapped; there are no other conditions, rewards or currency caps."
+    }
+  ],
+  "actions": [
+    {
+      "id": "buy",
+      "label": "Buy ember",
+      "kind": "buy",
+      "ruleIds": [
+        "trade",
+        "limits"
+      ],
+      "requires": [],
+      "currencyDelta": "-10",
+      "deltas": {
+        "ember": 1
+      }
+    },
+    {
+      "id": "convert",
+      "label": "Fuse prism",
+      "kind": "convert",
+      "ruleIds": [
+        "trade",
+        "limits"
+      ],
+      "requires": [],
+      "currencyDelta": "0",
+      "deltas": {
+        "ember": -2,
+        "prism": 1
+      }
+    },
+    {
+      "id": "reward",
+      "label": "Claim welcome gift",
+      "kind": "reward",
+      "ruleIds": [
+        "welcome",
+        "limits"
+      ],
+      "requires": [
+        {
+          "field": "prism",
+          "op": "eq",
+          "value": "1"
+        }
+      ],
+      "currencyDelta": "5",
+      "deltas": {
+        "welcome": -1
+      }
+    },
+    {
+      "id": "sell",
+      "label": "Sell prism",
+      "kind": "sell",
+      "ruleIds": [
+        "trade",
+        "limits"
+      ],
+      "requires": [],
+      "currencyDelta": "20",
+      "deltas": {
+        "prism": -1
+      }
+    }
+  ],
+  "initial": {
+    "currency": "100",
+    "resources": {
+      "ember": 0,
+      "prism": 0,
+      "welcome": 1
+    },
+    "turn": 0
+  },
+  "maxTurns": null,
+  "assumptions": []
+}

@@ -1,0 +1,17 @@
+name: verification
+on: [push, pull_request]
+jobs:
+  deterministic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npm run evaluate
+      - run: npm run verify -- examples/lantern-evidence.json --coverage

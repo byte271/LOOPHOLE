@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-09-12T03:51:59.477Z",
+  "status": "skipped",
+  "model": "gpt-6-astra",
+  "scope": "Fictional authored held-out prose. Not independent external ground truth.",
+  "limits": {
+    "maxCalls": 6,
+    "maxSpendUsd": 5,
+    "maxOutputTokens": 10000,
+    "timeoutMs": 90000,
+    "searchDepth": 6,
+    "searchStates": 20000,
+    "searchMilliseconds": 2000
+  },
+  "cases": [],
+  "reason": "OPENAI_API_KEY is not configured. No model calls were made; this is not a passing evaluation.",
+  "metrics": {
+    "casesPlanned": 6,
+    "casesCompleted": 0,
+    "inputTokens": 0,
+    "outputTokens": 0,
+    "estimatedCostUsd": "0.000000",
+    "conservativeReservedUsd": "0.000000",
+    "missingUsageResponses": 0,
+    "assertionsPassed": 0,
+    "assertionsTotal": 0,
+    "assertionAccuracy": null,
+    "candidates": 0,
+    "candidatesLegalReplay": 0,
+    "candidatesObjectiveAccepted": 0,
+    "candidateAcceptanceRate": null,
+    "ambiguities": 0,
+    "authoredPositiveCasesAssessed": 0,
+    "authoredNegativeCasesAssessed": 0,
+    "authoredFalsePositiveCases": 0,
+    "authoredFalsePositiveRate": null,
+    "elapsedMs": 0.4105000000000132
+  },
+  "limitations": [
+    "Schema validity and legal replay are not interpretation accuracy.",
+    "Semantic assertions were authored before live execution and are separate from replay; they are not exhaustive source correspondence checks.",
+    "No human review is simulated. All search results remain provisional.",
+    "Missing, failed or cost-skipped cases are not passing cases. Inspect case coverage alongside assertion accuracy.",
+    "Cost reservation is conservative, not a provider billing guarantee. Failed/cancelled calls may incur unreported costs.",
+    "In-memory server idempotency does not cover separate evaluation runs. Each explicitly launched run can incur new charges."
+  ]
+}

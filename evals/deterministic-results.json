@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "engineVersion": "1.0.0",
+  "at": "2026-09-12T03:51:59.093Z",
+  "kind": "deterministic-regression",
+  "notHeldOutInterpretation": true,
+  "liveModelCalls": 0,
+  "modelCostUsd": "0",
+  "passed": true,
+  "results": [
+    {
+      "id": "lantern",
+      "objective": {
+        "mode": "shortest",
+        "minGain": "1",
+        "restoreResources": true
+      },
+      "passed": true,
+      "status": "found",
+      "gain": "100",
+      "certificate": "repeatable-profit",
+      "explored": 4,
+      "discovered": 5,
+      "elapsedMs": 11,
+      "replayReproducible": true,
+      "coverage": "Shortest counterexample reproduced by a fresh BFS.",
+      "modelVersion": "m1-fef9da79c2d8f0bb8c968000146c9ead8740ab4f67f2f76a32f32476f0342a98"
+    },
+    {
+      "id": "lantern_repaired",
+      "objective": {
+        "mode": "shortest",
+        "minGain": "1",
+        "restoreResources": true
+      },
+      "passed": true,
+      "status": "exhausted",
+      "gain": null,
+      "certificate": null,
+      "explored": 13,
+      "discovered": 13,
+      "elapsedMs": 0,
+      "replayReproducible": true,
+      "coverage": "Depth-bounded exhaustive coverage independently rerun.",
+      "modelVersion": "m1-95144779ac2ff6c7b632fff1f2a4ddefbe9c22c68b25cf0633ce1240b9b8bc6c"
+    },
+    {
+      "id": "pearl",
+      "objective": {
+        "mode": "shortest",
+        "minGain": "1",
+        "restoreResources": true
+      },
+      "passed": true,
+      "status": "exhausted",
+      "gain": null,
+      "certificate": null,
+      "explored": 10,
+      "discovered": 10,
+      "elapsedMs": 0,
+      "replayReproducible": true,
+      "coverage": "Depth-bounded exhaustive coverage independently rerun.",
+      "modelVersion": "m1-b7db731730b23fc0bd424d29ae7ed29b0949ddb59ed1af3ffee9a900d585f2bd"
+    },
+    {
+      "id": "ember",
+      "objective": {
+        "mode": "shortest",
+        "minGain": "1",
+        "restoreResources": false
+      },
+      "passed": true,
+      "status": "found",
+      "gain": "5",
+      "certificate": "finite-only",
+      "explored": 6,
+      "discovered": 11,
+      "elapsedMs": 2,
+      "replayReproducible": true,
+      "coverage": "Shortest counterexample reproduced by a fresh BFS.",
+      "modelVersion": "m1-b0d54a53495ef78425374aae11831afa1b4967bacef28964cc81b16f8bc7b5ed"
+    },
+    {
+      "id": "ember",
+      "objective": {
+        "mode": "shortest",
+        "minGain": "1",
+        "restoreResources": true
+      },
+      "passed": true,
+      "status": "exhausted",
+      "gain": null,
+      "certificate": null,
+      "explored": 31,
+      "discovered": 31,
+      "elapsedMs": 1,
+      "replayReproducible": true,
+      "coverage": "Depth-bounded exhaustive coverage independently rerun.",
+      "modelVersion": "m1-b0d54a53495ef78425374aae11831afa1b4967bacef28964cc81b16f8bc7b5ed"
+    }
+  ]
+}

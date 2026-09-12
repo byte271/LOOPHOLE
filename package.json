@@ -1,0 +1,42 @@
+{
+  "name": "loophole",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "dev": "concurrently -k \"tsx watch src/server/index.ts\" \"vite --host 127.0.0.1\"",
+    "build": "tsc --noEmit && vite build && esbuild src/server/index.ts --bundle --platform=node --format=esm --packages=external --outfile=dist-server/index.js",
+    "start": "NODE_ENV=production node --env-file-if-exists=.env dist-server/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "verify": "tsx scripts/verify.ts",
+    "evaluate": "tsx scripts/evaluate.ts",
+    "evaluate:live": "tsx --env-file-if-exists=.env scripts/evaluate-live.ts"
+  },
+  "dependencies": {
+    "@noble/hashes": "^2.0.1",
+    "express": "^5.1.0",
+    "lucide-react": "^0.544.0",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1",
+    "zod": "^4.1.5"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "@types/node": "^24.3.1",
+    "@types/react": "^19.1.12",
+    "@types/react-dom": "^19.1.9",
+    "@vitejs/plugin-react": "^5.0.2",
+    "concurrently": "^9.2.1",
+    "esbuild": "^0.25.9",
+    "fast-check": "^4.3.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.4",
+    "vitest": "^5.0.0"
+  }
+}

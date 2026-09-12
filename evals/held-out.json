@@ -1,0 +1,26 @@
+[
+  {
+    "id": "lantern-market", "category": "renewable-profit", "source": "Fictional Lantern Market. Money is measured in crowns with 100 cents per crown. Start at turn zero with 2.00 crowns and zero lanterns. You may hold at most one lantern. There is no turn limit. Each purchase or sale takes one turn. The merchant has an explicitly inexhaustible lantern supply. Buy one lantern for 2.00 crowns if you hold zero lanterns and can afford it. Sell one held lantern for 3.00 crowns; the buyer always has inexhaustible funds and demand. Sales remove the lantern. No other resources, actions, costs or restrictions exist.",
+    "expected": { "model": true, "ambiguitiesMin": 0, "ambiguitiesMax": 0, "decimals": 2, "initialCurrency": "200", "currencyDeltas": ["-200", "300"], "maxGainAtDepth6": "300", "restoreResources": true, "hasProfit": true }
+  },
+  {
+    "id": "comet-welcome", "category": "finite-reward-trap", "source": "Fictional Comet Club. Credits are indivisible integer currency. Start at turn zero with zero credits and one unused welcome badge. The badge capacity is one. There is no turn limit. The only action takes one turn: surrender the unused badge to receive 7 credits. This destroys the badge, and no action can create or restore a badge. Rewards are paid from an inexhaustible club treasury. No other resources, actions, costs or restrictions exist.",
+    "expected": { "model": true, "ambiguitiesMin": 0, "ambiguitiesMax": 0, "decimals": 0, "initialCurrency": "0", "currencyDeltas": ["7"], "maxGainAtDepth6": "7", "restoreResources": false, "hasProfit": true, "consumedFiniteResource": true }
+  },
+  {
+    "id": "orchid-member-conversion", "category": "discount-conversion", "source": "Fictional Orchid Exchange. A crown has 100 cents. Start at turn zero with 2.00 crowns, membership flag 1, zero petals and zero charms. Membership is a permanent flag of capacity one and is never consumed or changed. Petal capacity is two; charm capacity is one. Turns are uncapped; every listed action takes one turn. An inexhaustible shop sells exactly two petals per purchase, only while you hold zero petals. The pair costs members (membership 1) 1.50 crowns and nonmembers (membership 0) 2.00 crowns. You must afford the applicable price. Convert exactly two petals into one charm, consuming both petals, only while you have no charm. Sell one held charm for 1.80 crowns, removing it; buyer funds and demand are inexhaustible. No other resources, actions, costs or restrictions exist.",
+    "expected": { "model": true, "ambiguitiesMin": 0, "ambiguitiesMax": 0, "decimals": 2, "initialCurrency": "200", "currencyDeltas": ["-150", "-200", "0", "180"], "maxGainAtDepth6": "60", "restoreResources": true, "hasProfit": true, "crossClauseDiscountGuards": true, "conversionConsumesTwo": true }
+  },
+  {
+    "id": "moss-finite-loss", "category": "negative-finite-stock", "source": "Fictional Moss Stall. A crown has 100 cents. Start at turn zero with 8.00 crowns, zero jars, and exactly two jars in shop stock. Carry capacity is one jar and shop-stock capacity is two. There is no turn limit. Each purchase or sale takes one turn. Buy one jar for 4.00 crowns only if you can afford it, carry zero jars and shop stock is at least one; decrease shop stock by one and increase held jars by one. Sell one held jar for 3.00 crowns, consuming the held jar. Sales never replenish shop stock. Buyer funds and demand are inexhaustible. No action replenishes stock. No other resources, actions, costs or restrictions exist.",
+    "expected": { "model": true, "ambiguitiesMin": 0, "ambiguitiesMax": 0, "decimals": 2, "initialCurrency": "800", "currencyDeltas": ["-400", "300"], "maxGainAtDepth6": "0", "restoreResources": false, "hasProfit": false, "consumedFiniteResource": true }
+  },
+  {
+    "id": "glass-mill-fraction", "category": "exact-fractional-currency", "source": "Fictional Glass Mill. Money uses marks with exactly 1000 milli-marks per mark. Start at turn zero with 0.500 marks and no beads. Bead capacity is one. There is no turn limit. Each action takes one turn. Buy one bead for exactly 0.125 marks, if you hold zero beads and can afford the price, from an explicitly inexhaustible bead supply. Sell one held bead for exactly 0.175 marks, removing the bead, to a buyer with inexhaustible money and demand. Prices are exact, with no rounding. No other resources, actions, costs or restrictions exist.",
+    "expected": { "model": true, "ambiguitiesMin": 0, "ambiguitiesMax": 0, "decimals": 3, "initialCurrency": "500", "currencyDeltas": ["-125", "175"], "maxGainAtDepth6": "150", "restoreResources": true, "hasProfit": true }
+  },
+  {
+    "id": "fog-voucher-ambiguity", "category": "ambiguity", "source": "Fictional Fog Fair. Buy a spool for 4 coins and trade it back for 5 coins. Members may receive a voucher after buying. A voucher sometimes reduces the next price. The rules do not state starting money, stock, inventory capacity, voucher amount, membership status, redemption priority or turn limits.",
+    "expected": { "model": false, "ambiguitiesMin": 1, "restoreResources": true }
+  }
+]

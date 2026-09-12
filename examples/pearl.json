@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "name": "Stillwater Pearl Market",
+  "description": "A closed, finite exchange. Nothing up its sleeve.",
+  "source": "Buy a pearl for 5.00 coins from stock. Sell a pearl back for 5.00 coins, returning it to stock. No fees, rewards or discounts apply.\n\nStart with 10.00 coins, zero pearls and shop stock of two pearls. You can hold two pearls and shop stock is capped at two. Every action costs one turn, with a six-turn limit. There are no other actions.",
+  "currency": {
+    "label": "coins",
+    "decimals": 2
+  },
+  "resources": [
+    {
+      "id": "pearl",
+      "label": "Pearl",
+      "kind": "item",
+      "max": 2
+    },
+    {
+      "id": "stock",
+      "label": "Market stock",
+      "kind": "stock",
+      "max": 2
+    }
+  ],
+  "rules": [
+    {
+      "id": "shop",
+      "text": "Buy a pearl for 5.00 coins from stock. Sell a pearl back for 5.00 coins, returning it to stock. No fees, rewards or discounts apply."
+    },
+    {
+      "id": "limits",
+      "text": "Start with 10.00 coins, zero pearls and shop stock of two pearls. You can hold two pearls and shop stock is capped at two. Every action costs one turn, with a six-turn limit. There are no other actions."
+    }
+  ],
+  "actions": [
+    {
+      "id": "buy",
+      "label": "Buy pearl",
+      "kind": "buy",
+      "ruleIds": [
+        "shop",
+        "limits"
+      ],
+      "requires": [],
+      "currencyDelta": "-500",
+      "deltas": {
+        "pearl": 1,
+        "stock": -1
+      }
+    },
+    {
+      "id": "sell",
+      "label": "Sell pearl",
+      "kind": "sell",
+      "ruleIds": [
+        "shop",
+        "limits"
+      ],
+      "requires": [],
+      "currencyDelta": "500",
+      "deltas": {
+        "pearl": -1,
+        "stock": 1
+      }
+    }
+  ],
+  "initial": {
+    "currency": "1000",
+    "resources": {
+      "pearl": 0,
+      "stock": 2
+    },
+    "turn": 0
+  },
+  "maxTurns": 6,
+  "assumptions": []
+}

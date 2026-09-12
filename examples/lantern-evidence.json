@@ -1,0 +1,760 @@
+{
+  "schemaVersion": 1,
+  "model": {
+    "schemaVersion": 1,
+    "name": "The Lantern Guild",
+    "description": "A maker grant, a guild discount, and a very generous buyback desk. Individually reasonable. Together, expensive.",
+    "source": "The market has inexhaustible ore and glass. Without a guild seal, a bundle of one ore and one glass costs 10.00 crowns. With a guild seal, you must spend it and pay 8.00 crowns for the bundle. You may buy only with no materials, lantern or pending receipt.\n\nCrafting consumes one ore and one glass and produces one lantern and one pending maker receipt. You must have no lantern and no pending receipt.\n\nWith a lantern and a pending receipt, claim a 3.00 crown maker reward and one guild seal, consuming the receipt. This reward is repeatable for every newly crafted lantern, with inexhaustible guild funds.\n\nThe exchange buys a lantern for 6.00 crowns, but only after its maker receipt has been claimed. It has inexhaustible funds and demand.\n\nStart with 10.00 crowns, one guild seal and nothing else. Inventory holds at most one ore, one glass and one lantern. Seal and pending receipt each have capacity one. Every action costs one turn. There is no turn limit, cooldown, currency cap, or other stock or reward limit.",
+    "currency": {
+      "label": "crowns",
+      "decimals": 2
+    },
+    "resources": [
+      {
+        "id": "ore",
+        "label": "Ore",
+        "kind": "item",
+        "max": 1
+      },
+      {
+        "id": "glass",
+        "label": "Glass",
+        "kind": "item",
+        "max": 1
+      },
+      {
+        "id": "lantern",
+        "label": "Lantern",
+        "kind": "item",
+        "max": 1
+      },
+      {
+        "id": "seal",
+        "label": "Guild seal",
+        "kind": "flag",
+        "max": 1
+      },
+      {
+        "id": "receipt",
+        "label": "Maker receipt",
+        "kind": "flag",
+        "max": 1
+      }
+    ],
+    "rules": [
+      {
+        "id": "market",
+        "text": "The market has inexhaustible ore and glass. Without a guild seal, a bundle of one ore and one glass costs 10.00 crowns. With a guild seal, you must spend it and pay 8.00 crowns for the bundle. You may buy only with no materials, lantern or pending receipt."
+      },
+      {
+        "id": "forge",
+        "text": "Crafting consumes one ore and one glass and produces one lantern and one pending maker receipt. You must have no lantern and no pending receipt."
+      },
+      {
+        "id": "guild",
+        "text": "With a lantern and a pending receipt, claim a 3.00 crown maker reward and one guild seal, consuming the receipt. This reward is repeatable for every newly crafted lantern, with inexhaustible guild funds."
+      },
+      {
+        "id": "exchange",
+        "text": "The exchange buys a lantern for 6.00 crowns, but only after its maker receipt has been claimed. It has inexhaustible funds and demand."
+      },
+      {
+        "id": "limits",
+        "text": "Start with 10.00 crowns, one guild seal and nothing else. Inventory holds at most one ore, one glass and one lantern. Seal and pending receipt each have capacity one. Every action costs one turn. There is no turn limit, cooldown, currency cap, or other stock or reward limit."
+      }
+    ],
+    "actions": [
+      {
+        "id": "buy_discount",
+        "label": "Buy with guild seal",
+        "kind": "buy",
+        "ruleIds": [
+          "market",
+          "limits"
+        ],
+        "requires": [
+          {
+            "field": "ore",
+            "op": "eq",
+            "value": "0"
+          },
+          {
+            "field": "glass",
+            "op": "eq",
+            "value": "0"
+          },
+          {
+            "field": "lantern",
+            "op": "eq",
+            "value": "0"
+          },
+          {
+            "field": "receipt",
+            "op": "eq",
+            "value": "0"
+          },
+          {
+            "field": "seal",
+            "op": "eq",
+            "value": "1"
+          }
+        ],
+        "currencyDelta": "-800",
+        "deltas": {
+          "ore": 1,
+          "glass": 1,
+          "seal": -1
+        }
+      },
+      {
+        "id": "buy_standard",
+        "label": "Buy at full price",
+        "kind": "buy",
+        "ruleIds": [
+          "market",
+          "limits"
+        ],
+        "requires": [
+          {
+            "field": "ore",
+            "op": "eq",
+            "value": "0"
+          },
+          {
+            "field": "glass",
+            "op": "eq",
+            "value": "0"
+          },
+          {
+            "field": "lantern",
+            "op": "eq",
+            "value": "0"
+          },
+          {
+            "field": "receipt",
+            "op": "eq",
+            "value": "0"
+          },
+          {
+            "field": "seal",
+            "op": "eq",
+            "value": "0"
+          }
+        ],
+        "currencyDelta": "-1000",
+        "deltas": {
+          "ore": 1,
+          "glass": 1
+        }
+      },
+      {
+        "id": "craft",
+        "label": "Craft a lantern",
+        "kind": "craft",
+        "ruleIds": [
+          "forge",
+          "limits"
+        ],
+        "requires": [
+          {
+            "field": "lantern",
+            "op": "eq",
+            "value": "0"
+          },
+          {
+            "field": "receipt",
+            "op": "eq",
+            "value": "0"
+          }
+        ],
+        "currencyDelta": "0",
+        "deltas": {
+          "ore": -1,
+          "glass": -1,
+          "lantern": 1,
+          "receipt": 1
+        }
+      },
+      {
+        "id": "claim",
+        "label": "Claim maker reward",
+        "kind": "reward",
+        "ruleIds": [
+          "guild",
+          "limits"
+        ],
+        "requires": [
+          {
+            "field": "lantern",
+            "op": "eq",
+            "value": "1"
+          },
+          {
+            "field": "receipt",
+            "op": "eq",
+            "value": "1"
+          }
+        ],
+        "currencyDelta": "300",
+        "deltas": {
+          "receipt": -1,
+          "seal": 1
+        }
+      },
+      {
+        "id": "sell",
+        "label": "Sell the lantern",
+        "kind": "sell",
+        "ruleIds": [
+          "exchange",
+          "limits"
+        ],
+        "requires": [
+          {
+            "field": "receipt",
+            "op": "eq",
+            "value": "0"
+          }
+        ],
+        "currencyDelta": "600",
+        "deltas": {
+          "lantern": -1
+        }
+      }
+    ],
+    "initial": {
+      "currency": "1000",
+      "resources": {
+        "ore": 0,
+        "glass": 0,
+        "lantern": 0,
+        "seal": 1,
+        "receipt": 0
+      },
+      "turn": 0
+    },
+    "maxTurns": null,
+    "assumptions": []
+  },
+  "reviewed": true,
+  "result": {
+    "status": "found",
+    "finding": {
+      "trace": {
+        "schemaVersion": 1,
+        "engineVersion": "1.0.0",
+        "modelVersion": "m1-fef9da79c2d8f0bb8c968000146c9ead8740ab4f67f2f76a32f32476f0342a98",
+        "initial": {
+          "currency": "1000",
+          "resources": {
+            "ore": 0,
+            "glass": 0,
+            "lantern": 0,
+            "seal": 1,
+            "receipt": 0
+          },
+          "turn": 0
+        },
+        "steps": [
+          {
+            "index": 0,
+            "actionId": "buy_discount",
+            "parameters": {},
+            "ruleIds": [
+              "market",
+              "limits"
+            ],
+            "checks": [
+              {
+                "label": "ore",
+                "passed": true,
+                "actual": "0",
+                "expected": "eq 0"
+              },
+              {
+                "label": "glass",
+                "passed": true,
+                "actual": "0",
+                "expected": "eq 0"
+              },
+              {
+                "label": "lantern",
+                "passed": true,
+                "actual": "0",
+                "expected": "eq 0"
+              },
+              {
+                "label": "receipt",
+                "passed": true,
+                "actual": "0",
+                "expected": "eq 0"
+              },
+              {
+                "label": "seal",
+                "passed": true,
+                "actual": "1",
+                "expected": "eq 1"
+              },
+              {
+                "label": "Currency stays nonnegative",
+                "passed": true,
+                "actual": "200",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Ore lower bound",
+                "passed": true,
+                "actual": "1",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Ore capacity",
+                "passed": true,
+                "actual": "1",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Glass lower bound",
+                "passed": true,
+                "actual": "1",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Glass capacity",
+                "passed": true,
+                "actual": "1",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Lantern lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Lantern capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Guild seal lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Guild seal capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Maker receipt lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Maker receipt capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              }
+            ],
+            "before": {
+              "currency": "1000",
+              "resources": {
+                "ore": 0,
+                "glass": 0,
+                "lantern": 0,
+                "seal": 1,
+                "receipt": 0
+              },
+              "turn": 0
+            },
+            "after": {
+              "currency": "200",
+              "resources": {
+                "ore": 1,
+                "glass": 1,
+                "lantern": 0,
+                "seal": 0,
+                "receipt": 0
+              },
+              "turn": 1
+            }
+          },
+          {
+            "index": 1,
+            "actionId": "craft",
+            "parameters": {},
+            "ruleIds": [
+              "forge",
+              "limits"
+            ],
+            "checks": [
+              {
+                "label": "lantern",
+                "passed": true,
+                "actual": "0",
+                "expected": "eq 0"
+              },
+              {
+                "label": "receipt",
+                "passed": true,
+                "actual": "0",
+                "expected": "eq 0"
+              },
+              {
+                "label": "Currency stays nonnegative",
+                "passed": true,
+                "actual": "200",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Ore lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Ore capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Glass lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Glass capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Lantern lower bound",
+                "passed": true,
+                "actual": "1",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Lantern capacity",
+                "passed": true,
+                "actual": "1",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Guild seal lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Guild seal capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Maker receipt lower bound",
+                "passed": true,
+                "actual": "1",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Maker receipt capacity",
+                "passed": true,
+                "actual": "1",
+                "expected": "lte 1"
+              }
+            ],
+            "before": {
+              "currency": "200",
+              "resources": {
+                "ore": 1,
+                "glass": 1,
+                "lantern": 0,
+                "seal": 0,
+                "receipt": 0
+              },
+              "turn": 1
+            },
+            "after": {
+              "currency": "200",
+              "resources": {
+                "ore": 0,
+                "glass": 0,
+                "lantern": 1,
+                "seal": 0,
+                "receipt": 1
+              },
+              "turn": 2
+            }
+          },
+          {
+            "index": 2,
+            "actionId": "claim",
+            "parameters": {},
+            "ruleIds": [
+              "guild",
+              "limits"
+            ],
+            "checks": [
+              {
+                "label": "lantern",
+                "passed": true,
+                "actual": "1",
+                "expected": "eq 1"
+              },
+              {
+                "label": "receipt",
+                "passed": true,
+                "actual": "1",
+                "expected": "eq 1"
+              },
+              {
+                "label": "Currency stays nonnegative",
+                "passed": true,
+                "actual": "500",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Ore lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Ore capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Glass lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Glass capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Lantern lower bound",
+                "passed": true,
+                "actual": "1",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Lantern capacity",
+                "passed": true,
+                "actual": "1",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Guild seal lower bound",
+                "passed": true,
+                "actual": "1",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Guild seal capacity",
+                "passed": true,
+                "actual": "1",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Maker receipt lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Maker receipt capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              }
+            ],
+            "before": {
+              "currency": "200",
+              "resources": {
+                "ore": 0,
+                "glass": 0,
+                "lantern": 1,
+                "seal": 0,
+                "receipt": 1
+              },
+              "turn": 2
+            },
+            "after": {
+              "currency": "500",
+              "resources": {
+                "ore": 0,
+                "glass": 0,
+                "lantern": 1,
+                "seal": 1,
+                "receipt": 0
+              },
+              "turn": 3
+            }
+          },
+          {
+            "index": 3,
+            "actionId": "sell",
+            "parameters": {},
+            "ruleIds": [
+              "exchange",
+              "limits"
+            ],
+            "checks": [
+              {
+                "label": "receipt",
+                "passed": true,
+                "actual": "0",
+                "expected": "eq 0"
+              },
+              {
+                "label": "Currency stays nonnegative",
+                "passed": true,
+                "actual": "1100",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Ore lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Ore capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Glass lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Glass capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Lantern lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Lantern capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Guild seal lower bound",
+                "passed": true,
+                "actual": "1",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Guild seal capacity",
+                "passed": true,
+                "actual": "1",
+                "expected": "lte 1"
+              },
+              {
+                "label": "Maker receipt lower bound",
+                "passed": true,
+                "actual": "0",
+                "expected": "gte 0"
+              },
+              {
+                "label": "Maker receipt capacity",
+                "passed": true,
+                "actual": "0",
+                "expected": "lte 1"
+              }
+            ],
+            "before": {
+              "currency": "500",
+              "resources": {
+                "ore": 0,
+                "glass": 0,
+                "lantern": 1,
+                "seal": 1,
+                "receipt": 0
+              },
+              "turn": 3
+            },
+            "after": {
+              "currency": "1100",
+              "resources": {
+                "ore": 0,
+                "glass": 0,
+                "lantern": 0,
+                "seal": 1,
+                "receipt": 0
+              },
+              "turn": 4
+            }
+          }
+        ]
+      },
+      "gain": "100",
+      "certificate": {
+        "kind": "repeatable-profit",
+        "gain": "100",
+        "argument": [
+          "Each execution gains 100 minor units. Every named non-currency resource returns exactly to its initial value.",
+          "All effects are constant integer deltas. The only currency guards used are lower bounds; extra currency preserves them and nonnegative balances.",
+          "All stock, eligibility, reward and consumption state is explicit and restored. Resource guards and capacities therefore repeat unchanged.",
+          "Turns are explicitly uncapped and no action can read them. Their monotone increase cannot block a later iteration.",
+          "By induction, iteration n starts with the same resources and initial currency plus n times the gain, and executes the same legal sequence. This is an unbounded-profit proof over mathematical integers in this reviewed model, not a claim about a real implementation."
+        ]
+      },
+      "provisional": false,
+      "objective": {
+        "mode": "shortest",
+        "minGain": "1",
+        "restoreResources": true
+      }
+    },
+    "progress": {
+      "explored": 4,
+      "discovered": 5,
+      "frontier": 1,
+      "depth": 3,
+      "elapsedMs": 11
+    },
+    "budget": {
+      "maxDepth": 12,
+      "maxStates": 20000,
+      "maxMilliseconds": 5000
+    },
+    "objective": {
+      "mode": "shortest",
+      "minGain": "1",
+      "restoreResources": true
+    },
+    "modelVersion": "m1-fef9da79c2d8f0bb8c968000146c9ead8740ab4f67f2f76a32f32476f0342a98",
+    "engineVersion": "1.0.0",
+    "message": "Verified shortest counterexample. Search stopped at the first objective-satisfying BFS depth.",
+    "depthBoundComplete": false,
+    "candidateResults": []
+  },
+  "createdAt": "2026-09-12T03:51:59.058Z"
+}
